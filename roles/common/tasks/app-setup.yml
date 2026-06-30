@@ -1,5 +1,5 @@
- - name: creating systemuser
-   ansible.builtin.user:
+  - name: creating systemuser
+    ansible.builtin.user:
       name: roboshop
       shell: /sbin/nologin
       system: yes
