@@ -29,7 +29,7 @@
 
 - name: loading data
   ansible.builtin.shell: mongosh --host mongodb.daws23.space </app/db/master-data.js
-    when: catalogueoutput.stdout | int < 0
+  when: catalogueoutput.stdout | int < 0
     
 
 - name: systemd setup
