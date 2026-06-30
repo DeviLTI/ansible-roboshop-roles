@@ -12,12 +12,12 @@
 
   - name: downloading the code
     ansible.builtin.get_url:
-      url: https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip
-      dest: /tmp/catalogue.zip
+      url: https://roboshop-artifacts.s3.amazonaws.com/"{{ component}}"-v3.zip
+      dest: /tmp/"{{ component }}".zip
      #this module think like the file is exist in ansible control server  so it need to extract from there to remote machine
      #remote_src: yes means file already exist in catalouge server(remote server)
   - name: extracting the code
     ansible.builtin.unarchive:
-      src: /tmp/catalogue.zip
+      src: /tmp/"{{ component }}".zip
       dest: /app
       remote_src: yes #files already exist in remote servre
