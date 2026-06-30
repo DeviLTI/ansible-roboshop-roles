@@ -1,0 +1,40 @@
+
+- name: app-setup
+  include_role:
+    name: common
+    tasks_from: app-setup      
+   
+- name: nodejs
+  include_role:
+    name: common
+    tasks_from: nodejs
+
+- name: copying mongodb repo
+  ansible.builtin.copy:
+    src: mongodb.repo
+    dest: /etc/yum.repos.d/mongo.repo
+
+- name: installing mongodb client
+  ansible.builtin.dnf:
+    name: mongodb-mongosh
+    state: present
+   
+- name: loading data
+  ansible.builtin.command: mongosh --host mongodb.daws23.space --eval 'db.getMongo().getDBNames().indexOf("catalogue")'
+    register: catalogueoutput   
+
+- name: catalogue output
+  ansible.builtin.debug:
+    msg: "{{ catalogueoutput }}"
+- name: loading data
+  ansible.builtin.shell: mongosh --host mongodb.daws23.space </app/db/master-data.js
+    when: catalogueoutput.stdout | int < 0
+    
+
+- name: systemd setup
+  include_role:
+    name: common
+    tasks_from: systemd
+    
+
+   
