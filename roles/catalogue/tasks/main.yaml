@@ -21,11 +21,12 @@
    
 - name: loading data
   ansible.builtin.command: mongosh --host mongodb.daws23.space --eval 'db.getMongo().getDBNames().indexOf("catalogue")'
-    register: catalogueoutput   
+  register: catalogueoutput   
 
 - name: catalogue output
   ansible.builtin.debug:
     msg: "{{ catalogueoutput }}"
+
 - name: loading data
   ansible.builtin.shell: mongosh --host mongodb.daws23.space </app/db/master-data.js
     when: catalogueoutput.stdout | int < 0
